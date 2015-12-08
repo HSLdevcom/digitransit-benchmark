@@ -1,0 +1,7 @@
+*.swp
+*.pyc
+
+docs/_build*
+
+*.egg*
+.tox
