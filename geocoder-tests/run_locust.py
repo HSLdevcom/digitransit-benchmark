@@ -22,7 +22,7 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
         options.hatch_rate = options.num_clients
 
         runners.locust_runner = runners.LocalLocustRunner(
-            [locustfile.TypingUser, locustfile.MovingUser], options)
+            [locustfile.TypingUser], options)
         runners.locust_runner.start_hatching(wait=True)
         runners.locust_runner.greenlet.join()
 
@@ -49,7 +49,7 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
 
 @click.command()
 @click.option("-h", '--host',
-              default='http://localhost:8888', show_default=True)
+              default='http://dev.digitransit.fi', show_default=True)
 @click.option("-n", '--num_clients',
               default=10, show_default=True)
 def main(num_clients, host):

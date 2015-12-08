@@ -9,23 +9,12 @@ class SuggestBehavior(TaskSet):
 
     @task(2)
     def index(self):
-        self.client.get("/suggest/" + "Mannerheimintie"[0:random.randint(1, 14)],
-                        name="suggest")
-
-
-class ReverseBehaviour(TaskSet):
-    @task()
-    def index(self):
-        self.client.get("/reverse/%s,%s" % (random.uniform(24.65, 24.8),
-                                            random.uniform(60.16, 60.22)),
-                        name='reverse')
-
-
-class MovingUser(HttpLocust):
-    task_set = ReverseBehaviour
-    host = 'http://matka.hsl.fi/geocoder'
+        street = 'Mannerheimintie'
+        for i in range(len(street)):
+          self.client.get("/autocomplete?text=" + "Mannerheimintie"[0:i],
+                          name="suggest")
 
 
 class TypingUser(HttpLocust):
     task_set = SuggestBehavior
-    host = 'http://matka.hsl.fi/geocoder'
+    host = 'http://dev.digitransit.fi/pelias/v1'
