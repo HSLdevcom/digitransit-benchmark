@@ -17,7 +17,7 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
     min = 0
     while True:
         done = False
-        print(min, max)
+        print('Min, max:', min, max)
         options.num_requests = options.num_clients * 10
         options.hatch_rate = options.num_clients
 
@@ -27,6 +27,17 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
         runners.locust_runner.greenlet.join()
 
         for name, value in runners.locust_runner.stats.entries.items():
+            print('name',
+                  'min_response_time',
+                  'median_response_time',
+                  'max_response_time',
+                  'total_rps')
+            for name, value in runners.locust_runner.stats.entries.items():
+                print(name,
+                      value.min_response_time,
+                      value.median_response_time,
+                      value.max_response_time,
+                      value.total_rps)
             if value.median_response_time > 300:
                 done = True
         if done:
@@ -35,12 +46,6 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
             min = options.num_clients
         if max is not None:
             if max < min + 5:
-                for name, value in runners.locust_runner.stats.entries.items():
-                    print(name,
-                          value.min_response_time,
-                          value.median_response_time,
-                          value.max_response_time,
-                          value.total_rps)
                 return (min, max)
             options.num_clients = (max + min) / 2
         else:
@@ -49,7 +54,7 @@ def find_limit(num_clients=10, host='http://localhost:8888'):
 
 @click.command()
 @click.option("-h", '--host',
-              default='http://dev.digitransit.fi', show_default=True)
+              default='http://dev.digitransit.fi/pelias/v1', show_default=True)
 @click.option("-n", '--num_clients',
               default=10, show_default=True)
 def main(num_clients, host):
