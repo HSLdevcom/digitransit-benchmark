@@ -1,7 +1,11 @@
-import random
+from random import choice
 
 from locust import HttpLocust, TaskSet, task
 
+streets = []
+with open('streetnames.txt', 'r') as f:
+    for line in f.readlines():
+        streets.append(line)
 
 class SuggestBehavior(TaskSet):
     min_wait = 100
@@ -9,8 +13,8 @@ class SuggestBehavior(TaskSet):
 
     @task(2)
     def index(self):
-        street = 'Mannerheimintie'
-        for i in range(len(street)):
+        street = choice(streets)
+        for i in range(2, len(street)):
           self.client.get("/autocomplete?text=" + "Mannerheimintie"[0:i],
                           name="suggest")
 
