@@ -45,9 +45,9 @@ def find_limit(num_clients=10,
         # XXX Handles only locust runner
         value = runners.locust_runner.stats.entries.values()[0]
         if value.min_response_time == None:
-            logging.warning("min_response_time was None")
-            from IPython import embed
-            embed() # this call anywhere in your program will start IPython
+            logging.error("min_response_time was None, exiting")
+            import sys
+            sys.exit(-1)
 
         results[options.num_clients] = (
             value.min_response_time,
@@ -97,7 +97,7 @@ def main(num_clients, host, median_latency, requests_per_client):
     x = [i[0] for i in ordered_results]
     ys = [i[1] for i in ordered_results]
     fig, ax1 = plt.subplots()
-    ax1.plot(x, [y[2] for y in ys], label='median', color='b')
+    median, = ax1.plot(x, [y[2] for y in ys], label='median', color='b')
     ax1.fill_between(x,
                      [y[1] for y in ys],
                      [y[3] for y in ys],
@@ -108,10 +108,11 @@ def main(num_clients, host, median_latency, requests_per_client):
         tl.set_color('b')
 
     ax2 = ax1.twinx()
-    ax2.plot(x, [y[5] for y in ys], label='rps', color='r')
+    rps, = ax2.plot(x, [y[5] for y in ys], label='rps', color='r')
     ax2.set_ylabel('rps', color='r')
     for tl in ax2.get_yticklabels():
             tl.set_color('r')
+    ax2.legend(handles=[median, rps])
     plt.show()
 
 
