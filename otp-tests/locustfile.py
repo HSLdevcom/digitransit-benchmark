@@ -11,7 +11,6 @@ class OTPBehavior(TaskSet):
 
     @task(2)
     def index(self):
-        # CSS and SVG sprites are embedded in the HTML
         url_params = choice(set_of_url_params)
         self.client.get(url_params, name="otp")
 
