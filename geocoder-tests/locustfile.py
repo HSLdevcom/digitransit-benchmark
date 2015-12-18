@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 from random import choice
+import codecs
 
 from locust import HttpLocust, TaskSet, task
 
 streets = []
-with open('streetnames.txt', 'r') as f:
+with codecs.open('streetnames.txt', 'r', 'utf-8') as f:
     for line in f.readlines():
         streets.append(line)
 
@@ -15,8 +17,8 @@ class SuggestBehavior(TaskSet):
     def index(self):
         street = choice(streets)
         for i in range(2, len(street)):
-          self.client.get("/autocomplete?text=" + "Mannerheimintie"[0:i],
-                          name="suggest")
+            params = "/autocomplete?text=" + street[0:i]
+            self.client.get(params, name="suggest")
 
 
 class TypingUser(HttpLocust):
