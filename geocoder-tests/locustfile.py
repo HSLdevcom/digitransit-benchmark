@@ -23,4 +23,3 @@ class SuggestBehavior(TaskSet):
 
 class TypingUser(HttpLocust):
     task_set = SuggestBehavior
-    host = 'http://dev.digitransit.fi/pelias/v1'
