@@ -17,4 +17,3 @@ class OTPBehavior(TaskSet):
 
 class RouteSearchingUser(HttpLocust):
     task_set = OTPBehavior
-    host = 'http://dev.digitransit.fi/otp/otp/routers/default/'
