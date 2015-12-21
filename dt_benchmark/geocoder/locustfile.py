@@ -21,5 +21,5 @@ class SuggestBehavior(TaskSet):
             self.client.get(params, name="suggest")
 
 
-class TypingUser(HttpLocust):
+class User(HttpLocust):
     task_set = SuggestBehavior

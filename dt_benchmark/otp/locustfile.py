@@ -1,8 +1,11 @@
+from pkg_resources import resource_stream
 from random import choice
+
 from locust import HttpLocust, TaskSet, task
 import simplejson
 
-url_params_json = simplejson.load(open("url_params.json"))
+url_params_json = simplejson.load(
+    resource_stream(__name__, 'url_params.json'))
 set_of_url_params = url_params_json["url_params"]
 
 class OTPBehavior(TaskSet):
@@ -15,5 +18,5 @@ class OTPBehavior(TaskSet):
         self.client.get(url_params, name="otp")
 
 
-class RouteSearchingUser(HttpLocust):
+class User(HttpLocust):
     task_set = OTPBehavior

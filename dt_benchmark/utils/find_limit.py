@@ -9,8 +9,7 @@ def find_limit(locustUser,
                num_clients=10,
                host='http://localhost:8888',
                median_latency=300,
-               requests_per_client=10
-               ):
+               requests_per_client=10):
     options = Namespace()
     options.host = host
     options.num_clients = num_clients
@@ -29,11 +28,6 @@ def find_limit(locustUser,
         runners.locust_runner.start_hatching(wait=True)
         runners.locust_runner.greenlet.join()
 
-        logging.info('name',
-                     'min_response_time',
-                     'median_response_time',
-                     'max_response_time',
-                     'total_rps')
         if runners.locust_runner.errors:
             logging.warn("Got %s errors", len(runners.locust_runner.errors))
             logging.warn(runners.locust_runner.errors.values()[0].error)
@@ -52,7 +46,8 @@ def find_limit(locustUser,
             value.get_response_time_percentile(0.95),
             value.max_response_time,
             value.total_rps)
-        logging.info(value.min_response_time,
+        logging.info('min_response_time %s, median_response_time %s, max_response_time %s, total_rps %s',
+                     value.min_response_time,
                      value.median_response_time,
                      value.max_response_time,
                      value.total_rps)

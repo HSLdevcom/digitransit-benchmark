@@ -16,6 +16,6 @@ class FrontpageBehavior(TaskSet):
         # - stop information (from OTP server)
 
 
-class FrontpageUser(HttpLocust):
+class User(HttpLocust):
     task_set = FrontpageBehavior
     host = 'http://dev.digitransit.fi/'
