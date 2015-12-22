@@ -1,15 +1,14 @@
 from locust import HttpLocust, TaskSet, task
 
-class FrontpageBehavior(TaskSet):
+class UIBehavior(TaskSet):
     min_wait = 100
     max_wait = 500
 
     @task(2)
     def index(self):
         # CSS and SVG sprites are embedded in the HTML
-        self.client.get("/", name="frontpage")
-        # All JS code is in one file
-        self.client.get("/js/bundle.js", name="frontpage")
+        self.client.get("styleguidelines", name="ui")
+        # JS code is in many bundles and would need parsing the HTML to get URLs
         # What's missing is not from UI server:
         # - one font (from Google)
         # - map tiles (from map server)
@@ -17,5 +16,5 @@ class FrontpageBehavior(TaskSet):
 
 
 class User(HttpLocust):
-    task_set = FrontpageBehavior
+    task_set = UIBehavior
     host = 'http://dev.digitransit.fi/'
