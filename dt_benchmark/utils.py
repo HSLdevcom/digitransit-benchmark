@@ -75,7 +75,7 @@ def plot_median_and_rps(results):
     ax1.fill_between(x,
                      [y[1] for y in ys],
                      [y[3] for y in ys],
-                    alpha=0.3)
+                     alpha=0.3)
     ax1.set_xlabel('# of concurrent clients')
     ax1.set_ylabel('ms', color='b')
     for tl in ax1.get_yticklabels():

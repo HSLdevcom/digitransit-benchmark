@@ -10,11 +10,12 @@ with resource_stream(__name__, 'streetnames.txt') as f:
     for line in f.readlines():
         streets.append(line.decode('utf-8'))
 
+
 class SuggestBehavior(TaskSet):
     min_wait = 100
     max_wait = 500
 
-    @task(2)
+    @task
     def index(self):
         street = choice(streets)
         for i in range(2, len(street)):

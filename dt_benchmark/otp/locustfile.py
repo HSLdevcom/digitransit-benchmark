@@ -4,15 +4,15 @@ from random import choice
 from locust import HttpLocust, TaskSet, task
 import simplejson
 
-url_params_json = simplejson.load(
-    resource_stream(__name__, 'url_params.json'))
-set_of_url_params = url_params_json["url_params"]
+set_of_url_params = simplejson.load(
+    resource_stream(__name__, 'url_params.json'))["url_params"]
+
 
 class OTPBehavior(TaskSet):
     min_wait = 100
     max_wait = 500
 
-    @task(2)
+    @task
     def index(self):
         url_params = choice(set_of_url_params)
         self.client.get(url_params, name="otp")

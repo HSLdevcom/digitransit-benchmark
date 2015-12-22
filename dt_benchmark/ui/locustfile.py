@@ -1,10 +1,11 @@
 from locust import HttpLocust, TaskSet, task
 
+
 class UIBehavior(TaskSet):
     min_wait = 100
     max_wait = 500
 
-    @task(2)
+    @task
     def index(self):
         # CSS and SVG sprites are embedded in the HTML
         self.client.get("styleguidelines", name="ui")

@@ -36,5 +36,5 @@ def test_geocoder():
     results = find_limit(User,
                          num_clients=1,
                          host='http://dev.digitransit.fi/pelias/v1',
-                         median_latency=10,
+                         median_latency=1,
                          requests_per_client=10)
