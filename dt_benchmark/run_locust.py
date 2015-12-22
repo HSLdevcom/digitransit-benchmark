@@ -5,8 +5,7 @@ import logging
 import click
 from locust import runners
 
-from utils.find_limit import find_limit
-from utils.plot_median_and_rps import plot_median_and_rps
+from utils import find_limit, plot_median_and_rps
 
 logging.basicConfig(level=logging.INFO)
 
