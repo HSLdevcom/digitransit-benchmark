@@ -1,7 +1,20 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import logging
 
 from dt_benchmark.utils import find_limit
+
+# Locust resets stats after spawning all clients to prevent low load in the
+# beginning from skewing the overall stats. So with low client numbers there's
+# a race condition between the client finishing its job and the spawner
+# resetting the stats.
+# Monkeypatch locust to prevent this so we can run simple, fast tests on the
+# benchmark itself (the tests assert that they have results).
+from locust.stats import RequestStats
+def noop(*arg, **kwargs):
+    print("Stats reset prevented by monkey patch!")
+RequestStats.reset_all = noop
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -13,13 +26,7 @@ def test_ui():
                          num_clients=1,
                          host='http://dev.digitransit.fi/',
                          median_latency=1,
-                         # Locust resets stats after spawning all clients to
-                         # prevent low load in the beginning from skewing the
-                         # overall stats. So with low client numbers there must
-                         # be enough requests to make the test long enough
-                         # (there's a race condition between the client finishing
-                         # its job before the spawner resets the stats).
-                         requests_per_client=10)
+                         requests_per_client=1)
 
 
 def test_otp():
@@ -28,7 +35,7 @@ def test_otp():
                          num_clients=1,
                          host='http://dev.digitransit.fi/otp/otp/routers/default/',
                          median_latency=1,
-                         requests_per_client=10)
+                         requests_per_client=1)
 
 
 def test_geocoder():
@@ -37,4 +44,4 @@ def test_geocoder():
                          num_clients=1,
                          host='http://dev.digitransit.fi/pelias/v1',
                          median_latency=1,
-                         requests_per_client=10)
+                         requests_per_client=1)
