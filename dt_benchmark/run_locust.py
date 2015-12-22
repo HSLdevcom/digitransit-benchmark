@@ -1,11 +1,13 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import logging
 
 import click
 from locust import runners
 
-from utils import find_limit, plot_median_and_rps
+from .utils import find_limit, plot_median_and_rps
 
 logging.basicConfig(level=logging.INFO)
 
@@ -21,15 +23,15 @@ logging.basicConfig(level=logging.INFO)
 @click.argument('target', type=click.Choice(['geocoder', 'otp', 'ui']))
 def main(num_clients, host, median_latency, requests_per_client, target):
     if target == 'geocoder':
-        from geocoder.locustfile import User
+        from .geocoder.locustfile import User
         if not host:
             host = 'http://dev.digitransit.fi/pelias/v1'
     elif target == 'otp':
-        from otp.locustfile import User
+        from .otp.locustfile import User
         if not host:
             host = 'http://dev.digitransit.fi/otp/otp/routers/default/'
     elif target == 'ui':
-        from ui.locustfile import User
+        from .ui.locustfile import User
         if not host:
             host = 'http://dev.digitransit.fi/'
 

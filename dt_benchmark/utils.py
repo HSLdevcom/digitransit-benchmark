@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+
 from argparse import Namespace
 import logging
 
@@ -31,10 +34,10 @@ def find_limit(locustUser,
 
         if runners.locust_runner.errors:
             logging.warn("Got %s errors", len(runners.locust_runner.errors))
-            logging.warn(runners.locust_runner.errors.values()[0].error)
+            logging.warn(list(runners.locust_runner.errors.values())[0].error)
 
         # XXX Handles only one locust runner
-        value = runners.locust_runner.stats.entries.values()[0]
+        value = list(runners.locust_runner.stats.entries.values())[0]
         assert value.min_response_time is not None
 
         results[options.num_clients] = (
@@ -60,7 +63,7 @@ def find_limit(locustUser,
                 logging.info("Stopping iteration at %s clients",
                              options.num_clients)
                 return results
-            options.num_clients = (max + min) / 2
+            options.num_clients = (max + min) // 2
         else:
             options.num_clients = options.num_clients * 2
         done = False

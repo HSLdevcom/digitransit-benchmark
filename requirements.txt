@@ -1,0 +1,2 @@
+setuptools>=19.1.1
+git+https://github.com/pmdarrow/locust@0b80c976ee1ddd2d0d955dadbce18fe95ad2d0c4#egg=locustio
