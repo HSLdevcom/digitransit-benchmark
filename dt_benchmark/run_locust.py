@@ -5,6 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 
 import click
+click.disable_unicode_literals_warning = True
 from locust import runners
 
 from .utils import find_limit, plot_median_and_rps
