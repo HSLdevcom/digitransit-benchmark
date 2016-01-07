@@ -11,7 +11,7 @@ Install with::
 Run with::
 
     . testenv/bin/activate
-    dt-benchmark -n 50 -m 300 -r 500 otp
+    dt_benchmark -n 50 -m 300 -r 500 otp
 
 Test with::
 
