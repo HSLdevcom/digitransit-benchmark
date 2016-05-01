@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 
 @click.command()
 @click.option("-h", '--host')
+@click.option("-f", '--filename')
 @click.option("-n", '--num_clients',
               default=10, show_default=True)
 @click.option("-m", '--median_latency',
@@ -22,7 +23,7 @@ logging.basicConfig(level=logging.INFO)
 @click.option("-r", '--requests_per_client',
               default=10, show_default=True)
 @click.argument('target', type=click.Choice(['geocoder', 'otp', 'ui']))
-def main(num_clients, host, median_latency, requests_per_client, target):
+def main(num_clients, host, median_latency, requests_per_client, target, filename):
     if target == 'geocoder':
         from .geocoder.locustfile import User
         if not host:
@@ -42,7 +43,8 @@ def main(num_clients, host, median_latency, requests_per_client, target):
                          median_latency,
                          requests_per_client)
 
-    plot_median_and_rps(results)
+    print(filename)
+    plot_median_and_rps(results, filename)
 
 if __name__ == '__main__':
     main()

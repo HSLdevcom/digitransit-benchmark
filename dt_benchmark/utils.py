@@ -69,7 +69,7 @@ def find_limit(locustUser,
         done = False
 
 
-def plot_median_and_rps(results):
+def plot_median_and_rps(results, filename=None):
     ordered_results = sorted(results.items())
     x = [i[0] for i in ordered_results]
     ys = [i[1] for i in ordered_results]
@@ -90,4 +90,7 @@ def plot_median_and_rps(results):
     for tl in ax2.get_yticklabels():
             tl.set_color('r')
     ax2.legend(handles=[median, rps])
-    plt.show()
+    if filename:
+        plt.savefig(filename, bbox_inches='tight')
+    else:
+        plt.show()
