@@ -12,6 +12,9 @@ Run with::
 
     . testenv/bin/activate
     dt_benchmark -n 50 -m 300 -r 500 otp
+    
+    # Using specified host
+    dt_benchmark -n 50 -m 300 -r 500 -h http://api.digitransit.fi/routing/v1/routers/hsl/ otp
 
 Test with::
 
